@@ -359,24 +359,8 @@ func (s *LicenseService) GetActivatedInstanceLimit(ctx context.Context, workspac
 
 // GetUserLimit gets the user limit value for the plan.
 func (s *LicenseService) GetUserLimit(ctx context.Context, workspaceID string) int {
-	subscription := s.LoadSubscription(ctx, workspaceID)
-	// Prefer to take values from the license first.
-	if subscription.Seats > 0 {
-		return int(subscription.Seats)
-	}
-
-	limit := userLimitValues[subscription.Plan]
-	if subscription.Plan == v1pb.PlanType_FREE {
-		return limit
-	}
-
-	// To be compatible with old licenses which don't have seat field set in the claim.
-	// Unlimited seat license.
-	if subscription.Seats <= 0 {
-		return math.MaxInt
-	}
-
-	return int(subscription.Seats)
+	// Always return unlimited user count
+	return math.MaxInt
 }
 
 // GetInstanceLimit gets the instance limit value for the plan.
