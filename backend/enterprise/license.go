@@ -42,7 +42,7 @@ var instanceLimitValues = map[v1pb.PlanType]int{}
 var planFeatureMatrix = make(map[v1pb.PlanType]map[v1pb.PlanFeature]bool)
 
 var defaultFreeSubscription = &v1pb.Subscription{
-	Plan: v1pb.PlanType_FREE,
+	Plan: v1pb.PlanType_ENTERPRISE,
 }
 
 func init() {
