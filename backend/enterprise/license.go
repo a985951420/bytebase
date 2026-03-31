@@ -350,11 +350,8 @@ func (s *LicenseService) IsFeatureEnabledForInstance(ctx context.Context, worksp
 
 // GetActivatedInstanceLimit returns the activated instance limit for the current subscription.
 func (s *LicenseService) GetActivatedInstanceLimit(ctx context.Context, workspaceID string) int {
-	limit := s.LoadSubscription(ctx, workspaceID).ActiveInstances
-	if limit < 0 {
-		return math.MaxInt
-	}
-	return int(limit)
+	// Always return unlimited instance count
+	return math.MaxInt
 }
 
 // GetUserLimit gets the user limit value for the plan.
@@ -365,21 +362,8 @@ func (s *LicenseService) GetUserLimit(ctx context.Context, workspaceID string) i
 
 // GetInstanceLimit gets the instance limit value for the plan.
 func (s *LicenseService) GetInstanceLimit(ctx context.Context, workspaceID string) int {
-	subscription := s.LoadSubscription(ctx, workspaceID)
-	// Prefer to take values from the license first.
-	if subscription.Instances > 0 {
-		return int(subscription.Instances)
-	}
-
-	limit := instanceLimitValues[subscription.Plan]
-	if limit == -1 {
-		// Enterprise license.
-		if subscription.Instances > 0 {
-			return int(subscription.Instances)
-		}
-		limit = math.MaxInt
-	}
-	return limit
+	// Always return unlimited instance count
+	return math.MaxInt
 }
 
 // StoreLicense will store license into file.
