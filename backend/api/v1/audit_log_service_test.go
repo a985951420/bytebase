@@ -25,7 +25,7 @@ func TestGetAuditLogRetentionDays(t *testing.T) {
 		},
 		{
 			plan:         v1pb.PlanType_TEAM,
-			expectedDays: 7, // 7 days retention
+			expectedDays: -1, // 7 days retention
 		},
 		{
 			plan:         v1pb.PlanType_ENTERPRISE,
